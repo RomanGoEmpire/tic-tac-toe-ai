@@ -1,5 +1,4 @@
-import numpy as np
-
+from board import Board
 
 class Player:
 
@@ -7,5 +6,5 @@ class Player:
         self.name = name
         self.marker = marker
 
-    def play_move(self, board: np.array) -> tuple[int, int]:
-        return 0, 0
+    def play_move(self, board: Board) -> int:
+        return 0

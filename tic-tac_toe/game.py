@@ -1,20 +1,22 @@
 from board import Board
-from random_player import RandomPlayer
+from player import Player
+
 
 class Game:
 
-    def __init__(self):
+    def __init__(self, players: list[Player]):
         self.board = Board()
-        self.players = [RandomPlayer("Player 1", 1), RandomPlayer("Player 2", 2)]
+        self.players = players
         self.winner = None
 
     def start_game(self):
         current = 0
         for i in range(9):
-            free_moves = self.board.get_free_places()
-            x, y = self.players[current].play_move(free_moves)
-            self.board.place(x, y, self.players[current].marker)
+            index = -1
             print(self.board)
+            while not self.board.can_place(index):
+                index = self.players[current].play_move(self.board)
+            self.board.place(index, self.players[current].marker)
             if self.board.get_winner():
                 print(self.players[current].name)
                 self.winner = self.players[current]
@@ -22,4 +24,3 @@ class Game:
             current = 1 if current == 0 else 0
         if self.winner is None:
             print("No winner")
-
